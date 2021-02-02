@@ -54,12 +54,10 @@ public class LoginFragment extends Fragment {
 
         // Checking if the user is already logged in.
         // If not, logging screen, else, navigate to main screen.
-        if (FirebaseAuth.getInstance() != null) {
-            if (FirebaseAuth.getInstance().getCurrentUser() != null) {
-                navController.navigate(R.id.action_loginFragment_to_mainFragment);
-            } else {
-                startSignInActivity();
-            }
+        if (FirebaseAuth.getInstance().getCurrentUser() != null) {
+            navController.navigate(R.id.action_loginFragment_to_mainFragment);
+        } else {
+            startSignInActivity();
         }
 
     }
@@ -71,7 +69,7 @@ public class LoginFragment extends Fragment {
                         .setAvailableProviders(Arrays.asList(
                                 new AuthUI.IdpConfig.GoogleBuilder().build(),
                                 new AuthUI.IdpConfig.FacebookBuilder().build()))
-                        .setIsSmartLockEnabled(true, true)
+                        .setIsSmartLockEnabled(false, true)
                         .setTheme(R.style.Startup_theme)
                         .setLogo(R.drawable.logo_title)
                         .build(), AUTH_REQUEST_CODE);

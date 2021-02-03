@@ -11,16 +11,31 @@ import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.appcompat.widget.Toolbar;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.fragment.app.Fragment;
+import androidx.navigation.NavController;
+import androidx.navigation.Navigation;
 
 import com.aki.go4lunchproject.R;
 import com.aki.go4lunchproject.databinding.FragmentMainBinding;
+import com.aki.go4lunchproject.databinding.NavHeaderBinding;
+import com.bumptech.glide.Glide;
+import com.bumptech.glide.request.RequestOptions;
 import com.firebase.ui.auth.AuthUI;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class MainFragment extends Fragment {
 
+    //TODO : Créer la page de préférences (settings)
+    //TODO : Gérer la map et places
+    //TODO : Gérer ListView et Workmates
+    //TODO : Gérer YourLunch et les favoris
+
+    NavController navController;
+
+    // BINDINGS
     FragmentMainBinding mainBinding;
+    NavHeaderBinding headerBinding;
 
     // UI
     private DrawerLayout drawer;
@@ -56,7 +71,7 @@ public class MainFragment extends Fragment {
                     case R.id.logout:
                         AuthUI.getInstance()
                                 .signOut(getContext());
-                        getActivity().finish();
+                        navController.navigate(R.id.action_mainFragment_to_loginFragment);
                         break;
                 }
                 return true;
@@ -77,12 +92,14 @@ public class MainFragment extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         mainBinding = FragmentMainBinding.bind(view);
+        navController = Navigation.findNavController(view);
 
         Toolbar toolbar = mainBinding.toolbar;
 
         drawer = mainBinding.drawerLayout;
         NavigationView navView = mainBinding.navView;
         navView.setNavigationItemSelectedListener(drawerListener);
+        headerBinding = NavHeaderBinding.bind(navView.getHeaderView(0));
 
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(this.getActivity(), drawer, toolbar,
                 R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -92,6 +109,18 @@ public class MainFragment extends Fragment {
         BottomNavigationView bottomNav = mainBinding.bottomNavView;
         bottomNav.setOnNavigationItemSelectedListener(bottomNavListener);
 
+        updateUi();
+
         getActivity().getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container_main, new MapsFragment()).commit();
+    }
+
+    public void updateUi() {
+        Glide.with(this)
+                .load(FirebaseAuth.getInstance().getCurrentUser().getPhotoUrl())
+                .apply(RequestOptions.circleCropTransform())
+                .into(headerBinding.profilePic);
+
+        headerBinding.username.setText(FirebaseAuth.getInstance().getCurrentUser().getDisplayName());
+        headerBinding.usermail.setText(FirebaseAuth.getInstance().getCurrentUser().getEmail());
     }
 }

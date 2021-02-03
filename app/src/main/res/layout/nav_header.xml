@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="264dp"
     android:gravity="bottom"
+    android:id="@+id/drawer_header"
     android:orientation="vertical">
 
     <ImageView
@@ -20,15 +21,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:fontFamily="@font/roboto_bold"
-        android:textScaleX="0.95"
         android:text="@string/title"
         android:textColor="@android:color/white"
+        android:textScaleX="0.95"
         android:textSize="42sp"
         app:layout_constraintBottom_toTopOf="@+id/username"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/imageView2"
-        app:layout_constraintVertical_bias="0.5" />
+        app:layout_constraintTop_toTopOf="@+id/imageView2" />
 
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profile_pic"
@@ -48,9 +49,9 @@
         android:text="Tommy MARCHAL"
         android:textAppearance="@style/TextAppearance.MaterialComponents.Body1"
         android:textColor="@android:color/white"
-        app:layout_constraintBottom_toBottomOf="@+id/imageView2"
+        app:layout_constraintBottom_toBottomOf="@+id/profile_pic"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.3"
+        app:layout_constraintHorizontal_bias="0.2"
         app:layout_constraintStart_toEndOf="@+id/profile_pic"
         app:layout_constraintTop_toTopOf="@+id/profile_pic"
         app:layout_constraintVertical_bias="0.10" />

@@ -39,6 +39,7 @@ public class MainFragment extends Fragment {
 
     // UI
     private DrawerLayout drawer;
+    private Toolbar toolbar;
 
     // Listeners
     private BottomNavigationView.OnNavigationItemSelectedListener bottomNavListener =
@@ -94,7 +95,8 @@ public class MainFragment extends Fragment {
         mainBinding = FragmentMainBinding.bind(view);
         navController = Navigation.findNavController(view);
 
-        Toolbar toolbar = mainBinding.toolbar;
+        toolbar = mainBinding.toolbar;
+        toolbar.setTitle("I'm Hungry !");
 
         drawer = mainBinding.drawerLayout;
         NavigationView navView = mainBinding.navView;

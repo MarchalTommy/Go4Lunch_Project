@@ -1,57 +1,137 @@
+
 package com.aki.go4lunchproject.models;
 
-public class Restaurant {
+import java.io.Serializable;
+import java.util.List;
+import android.os.Parcel;
+import android.os.Parcelable;
+import android.os.Parcelable.Creator;
+import com.google.gson.annotations.Expose;
+import com.google.gson.annotations.SerializedName;
 
-    private String uid, name, address, imageUrl;
-    private Boolean isBooked;
+public class Restaurant implements Serializable, Parcelable
+{
 
-    public Restaurant() {}
+    @SerializedName("html_attributions")
+    @Expose
+    private List<Object> htmlAttributions = null;
+    @SerializedName("next_page_token")
+    @Expose
+    private String nextPageToken;
+    @SerializedName("results")
+    @Expose
+    private List<Result> results = null;
+    @SerializedName("status")
+    @Expose
+    private String status;
+    public final static Parcelable.Creator<Restaurant> CREATOR = new Creator<Restaurant>() {
 
-    public Restaurant(String uid, String name, String address, String imageUrl) {
-        this.uid = uid;
-        this.name = name;
-        this.address = address;
-        this.imageUrl = imageUrl;
-        this.isBooked = false;
+
+        @SuppressWarnings({
+            "unchecked"
+        })
+        public Restaurant createFromParcel(Parcel in) {
+            return new Restaurant(in);
+        }
+
+        public Restaurant[] newArray(int size) {
+            return (new Restaurant[size]);
+        }
+
+    }
+    ;
+    private final static long serialVersionUID = -2166576751259338167L;
+
+    protected Restaurant(Parcel in) {
+        in.readList(this.htmlAttributions, (java.lang.Object.class.getClassLoader()));
+        this.nextPageToken = ((String) in.readValue((String.class.getClassLoader())));
+        in.readList(this.results, (com.aki.go4lunchproject.models.Result.class.getClassLoader()));
+        this.status = ((String) in.readValue((String.class.getClassLoader())));
     }
 
-    public String getUid() {
-        return uid;
+    /**
+     * No args constructor for use in serialization
+     * 
+     */
+    public Restaurant() {
     }
 
-    public void setUid(String uid) {
-        this.uid = uid;
+    /**
+     * 
+     * @param htmlAttributions
+     * @param nextPageToken
+     * @param results
+     * @param status
+     */
+    public Restaurant(List<Object> htmlAttributions, String nextPageToken, List<Result> results, String status) {
+        super();
+        this.htmlAttributions = htmlAttributions;
+        this.nextPageToken = nextPageToken;
+        this.results = results;
+        this.status = status;
     }
 
-    public String getName() {
-        return name;
+    public List<Object> getHtmlAttributions() {
+        return htmlAttributions;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setHtmlAttributions(List<Object> htmlAttributions) {
+        this.htmlAttributions = htmlAttributions;
     }
 
-    public String getAddress() {
-        return address;
+    public Restaurant withHtmlAttributions(List<Object> htmlAttributions) {
+        this.htmlAttributions = htmlAttributions;
+        return this;
     }
 
-    public void setAddress(String address) {
-        this.address = address;
+    public String getNextPageToken() {
+        return nextPageToken;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public void setNextPageToken(String nextPageToken) {
+        this.nextPageToken = nextPageToken;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public Restaurant withNextPageToken(String nextPageToken) {
+        this.nextPageToken = nextPageToken;
+        return this;
     }
 
-    public Boolean getBookedState() {
-        return isBooked;
+    public List<Result> getResults() {
+        return results;
     }
 
-    public void setBookedState(Boolean booked) {
-        isBooked = booked;
+    public void setResults(List<Result> results) {
+        this.results = results;
     }
+
+    public Restaurant withResults(List<Result> results) {
+        this.results = results;
+        return this;
+    }
+
+    public String getStatus() {
+        return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
+    public Restaurant withStatus(String status) {
+        this.status = status;
+        return this;
+    }
+
+    public void writeToParcel(Parcel dest, int flags) {
+        dest.writeList(htmlAttributions);
+        dest.writeValue(nextPageToken);
+        dest.writeList(results);
+        dest.writeValue(status);
+    }
+
+    public int describeContents() {
+        return  0;
+    }
+
 }

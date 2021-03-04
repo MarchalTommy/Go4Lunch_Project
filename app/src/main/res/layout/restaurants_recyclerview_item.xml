@@ -8,7 +8,9 @@
         android:id="@+id/restaurantName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
         android:text="Le Zinc"
+        android:textColor="@color/secondaryTextColor"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -17,6 +19,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Japanese"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toTopOf="@id/restaurantTime"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/restaurantName" />
@@ -26,6 +29,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="-"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintStart_toEndOf="@id/restaurantType"
         app:layout_constraintTop_toTopOf="@id/restaurantType" />
 
@@ -34,6 +38,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="24 rue du Faubourg Poissonnière"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="@id/restaurantType"
         app:layout_constraintStart_toEndOf="@id/separator"
         app:layout_constraintTop_toTopOf="@id/restaurantType" />
@@ -42,7 +47,9 @@
         android:id="@+id/restaurantTime"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginBottom="8dp"
         android:text="Open until 7pm"
+        android:textColor="@android:color/darker_gray"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toStartOf="parent" />
 
@@ -59,6 +66,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="348m"
+        android:textColor="@color/cardview_shadow_start_color"
         app:layout_constraintEnd_toStartOf="@id/restaurantPic"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -66,24 +74,25 @@
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:src="@drawable/ic_person_outline"
-        app:layout_constraintTop_toBottomOf="@id/restaurantDistance"
         app:layout_constraintBottom_toTopOf="@id/restaurantRatingBar"
-        app:layout_constraintEnd_toStartOf="@id/numberOfWorkmatesEatingHere"/>
+        app:layout_constraintEnd_toStartOf="@id/numberOfWorkmatesEatingHere"
+        app:layout_constraintTop_toBottomOf="@id/restaurantDistance" />
 
     <TextView
+        android:id="@+id/numberOfWorkmatesEatingHere"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:id="@+id/numberOfWorkmatesEatingHere"
         android:text="(3)"
-        app:layout_constraintTop_toBottomOf="@id/restaurantDistance"
+        android:textColor="@color/secondaryTextColor"
         app:layout_constraintBottom_toTopOf="@id/restaurantRatingBar"
-        app:layout_constraintEnd_toStartOf="@id/restaurantPic"/>
+        app:layout_constraintEnd_toStartOf="@id/restaurantPic"
+        app:layout_constraintTop_toBottomOf="@id/restaurantDistance" />
 
     <androidx.appcompat.widget.AppCompatRatingBar
+        android:id="@+id/restaurantRatingBar"
         android:layout_width="100dp"
         android:layout_height="24dp"
-        android:id="@+id/restaurantRatingBar"
         app:layout_constraintBottom_toBottomOf="@id/restaurantPic"
-        app:layout_constraintEnd_toStartOf="@id/restaurantPic"/>
+        app:layout_constraintEnd_toStartOf="@id/restaurantPic" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

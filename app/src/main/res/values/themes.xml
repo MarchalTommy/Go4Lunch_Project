@@ -16,6 +16,15 @@
         <item name="colorSurface">@android:color/white</item>
     </style>
 
+    <style name="rating" parent="Widget.AppCompat.RatingBar">
+        <item name="android:stepSize">1.0</item>
+        <item name="android:numStars">3</item>
+        <item name="android:progressDrawable">@drawable/star</item>
+        <item name="minHeight">24dip</item>
+        <item name="maxHeight">24dip</item>
+
+    </style>
+
     <style name="LaunchTheme" parent="Theme.MaterialComponents.Light.NoActionBar">
         <item name="android:windowTranslucentStatus">true</item>
         <!-- Primary brand color. -->

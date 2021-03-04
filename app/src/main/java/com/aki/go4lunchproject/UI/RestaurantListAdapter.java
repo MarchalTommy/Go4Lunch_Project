@@ -18,11 +18,10 @@ import java.util.List;
 
 public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAdapter.RestaurantViewHolder> {
 
-    Result mRestaurant;
-    private List<Restaurant> restaurants = new ArrayList<>();
+    private List<Result> results = new ArrayList<>();
 
-    void updateList(final List<Restaurant> restaurants) {
-        this.restaurants = restaurants;
+    void updateList(final List<Result> results) {
+        this.results = results;
         notifyDataSetChanged();
     }
 
@@ -35,15 +34,15 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
 
     @Override
     public void onBindViewHolder(@NonNull RestaurantViewHolder holder, int position) {
-        holder.bind(restaurants.get(position));
+        holder.bind(results.get(position));
     }
 
     @Override
     public int getItemCount() {
-        if(restaurants.isEmpty()){
+        if(results.isEmpty()){
             return 0;
         } else {
-            return restaurants.size();
+            return results.size();
         }
     }
 
@@ -56,19 +55,30 @@ public class RestaurantListAdapter extends RecyclerView.Adapter<RestaurantListAd
             binding = RestaurantsRecyclerviewItemBinding.bind(view);
         }
 
-        public void bind(Restaurant restaurant) {
-            if (restaurant != null) {
-                Result result = restaurant.getResults().get(0);
-
-                binding.restaurantType.setText(result.getTypes().get(0));
-                binding.restaurantTime.setText(result.getOpeningHours().toString());
+        public void bind(Result result) {
+            if (result != null) {
+                binding.restaurantTime.setText((result.getOpeningHours() == null ? " " : result.getOpeningHours().toString()));
                 binding.restaurantAddress.setText(result.getVicinity());
                 binding.restaurantName.setText(result.getName());
-                Glide.with(binding.getRoot())
-                        .load(result.getPhotos().get(0))
-                        .centerCrop()
-                        .into(binding.restaurantPic);
-                //TODO : finir les binds (RatingBar, distance, et ce qu'il manquera...)
+
+                if(result.getPhotos() != null){
+                    Glide.with(binding.getRoot())
+                            .load(result.getPhotos().get(0))
+                            .centerCrop()
+                            .into(binding.restaurantPic);
+                }
+
+                //TODO : finir les binds (distance, et ce qu'il manquera...)
+
+                if (result.getRating() <= 2 && result.getRating() > 0) {
+                    binding.restaurantRatingBar.setRating(1);
+                }else if(result.getRating() <= 4 && result.getRating() > 2){
+                    binding.restaurantRatingBar.setRating(2);
+                } else if(result.getRating() > 4){
+                    binding.restaurantRatingBar.setRating(3);
+                }else {
+                    binding.restaurantRatingBar.setRating(0);
+                }
             }
         }
     }

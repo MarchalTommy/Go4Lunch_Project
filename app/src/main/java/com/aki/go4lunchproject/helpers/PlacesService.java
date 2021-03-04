@@ -1,6 +1,9 @@
 package com.aki.go4lunchproject.helpers;
 
 import com.aki.go4lunchproject.models.Restaurant;
+import com.aki.go4lunchproject.models.Result;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.util.List;
 
@@ -30,14 +33,8 @@ public interface PlacesService {
     }
 
     @GET("/maps/api/place/nearbysearch/json")
-    Call<List<Restaurant>> getRestaurantsAround(@Query("key") String apiKey,
-                                                    @Query("location") String userCoordinates,
-                                                    @Query("type") String type,
-                                                    @Query("rankby") String rankBy);
-
-    @GET("/maps/api/place/nearbyseach/json")
-    Call<Restaurant> getRestaurantAroundTest(@Query("key") String apiKey,
-                                             @Query("location") String userCoordinates,
-                                             @Query("type") String type,
-                                             @Query("rankby") String rankBy);
+    Call<JsonObject> getRestaurantsAround(@Query("key") String apiKey,
+                                         @Query("location") String userCoordinates,
+                                         @Query("type") String type,
+                                         @Query("rankby") String rankBy);
 }

@@ -6,6 +6,9 @@ import androidx.annotation.Nullable;
 
 import com.aki.go4lunchproject.BuildConfig;
 import com.aki.go4lunchproject.models.Restaurant;
+import com.aki.go4lunchproject.models.Result;
+import com.google.gson.JsonArray;
+import com.google.gson.JsonObject;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
@@ -23,9 +26,8 @@ import static android.content.ContentValues.TAG;
 public class RestaurantCalls {
 
     public interface Callbacks {
-        void onResponse(@Nullable List<Restaurant> restaurants);
+        void onResponse(@Nullable JsonObject jsonObject);
         void onFailure();
-        void onResponse(@Nullable Restaurant restaurant);
     }
 
     public static void fetchRestaurantsAround(Callbacks callbacks, String coordinates){
@@ -34,11 +36,11 @@ public class RestaurantCalls {
 
         PlacesService placesService = PlacesService.setRetrofit();
 
-        Call<List<Restaurant>> call = placesService.getRestaurantsAround(BuildConfig.API_KEY, coordinates, "restaurant", "distance");
+        Call<JsonObject> call = placesService.getRestaurantsAround(BuildConfig.API_KEY, coordinates, "restaurant", "distance");
 
-        call.enqueue(new Callback<List<Restaurant>>() {
+        call.enqueue(new Callback<JsonObject>() {
             @Override
-            public void onResponse(Call<List<Restaurant>> call, Response<List<Restaurant>> response) {
+            public void onResponse(Call<JsonObject> call, Response<JsonObject> response) {
 
                 if(callbacksWeakReference.get() != null) {
                     callbacksWeakReference.get().onResponse(response.body());
@@ -46,7 +48,7 @@ public class RestaurantCalls {
             }
 
             @Override
-            public void onFailure(Call<List<Restaurant>> call, Throwable t) {
+            public void onFailure(Call<JsonObject> call, Throwable t) {
 
                 Log.d(TAG, "onFailure: "+ t.getMessage());
 
@@ -56,34 +58,5 @@ public class RestaurantCalls {
             }
         });
 
-    }
-
-    public static void fetchRestaurantsTest(Callbacks callbacks, String coordinates){
-
-        final WeakReference<Callbacks> callbacksWeakReference = new WeakReference<Callbacks>(callbacks);
-
-        PlacesService placesService = PlacesService.setRetrofit();
-
-        Call<Restaurant> call = placesService.getRestaurantAroundTest(BuildConfig.API_KEY, coordinates, "restaurant", "distance");
-
-        call.enqueue(new Callback<Restaurant>() {
-            @Override
-            public void onResponse(Call<Restaurant> call, Response<Restaurant> response) {
-
-                if(callbacksWeakReference.get() != null) {
-                    callbacksWeakReference.get().onResponse(response.body());
-                }
-            }
-
-            @Override
-            public void onFailure(Call<Restaurant> call, Throwable t) {
-
-                Log.d(TAG, "onFailure: "+ t.getMessage());
-
-                if(callbacksWeakReference.get() != null) {
-                    callbacksWeakReference.get().onFailure();
-                }
-            }
-        });
     }
 }
